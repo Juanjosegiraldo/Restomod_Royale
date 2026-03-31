@@ -1,0 +1,28 @@
+{
+  "name": "restomod-royale",
+  "version": "1.0.0",
+  "description": "Aplicacion CRUD de personalizacion de autos clasicos - TypeScript",
+  "main": "src/index.ts",
+  "scripts": {
+    "dev": "tsx src/index.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "typescript",
+    "restomod",
+    "crud",
+    "decorators",
+    "console-app"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^22.13.0",
+    "@types/readline-sync": "^1.4.8",
+    "readline-sync": "^1.4.10",
+    "tsx": "^4.19.2",
+    "typescript": "^5.8.2"
+  },
+  "dependencies": {
+    "reflect-metadata": "^0.2.2"
+  }
+}
