@@ -2,10 +2,10 @@ import { generateId } from '../utils/id-generator.js';
 
 // ==========================================
 // CART SERVICE - CRUD del carrito con decoradores
-// Historia: HU9 (Agregar)
+// Historia: HU11 (Editar)
 // ==========================================
 
-import { Log, Validate, createVehicleConfigValidator, createNotEmptyValidator } from '../middleware/index.js';
+import { Log, Validate, createVehicleConfigValidator } from '../middleware/index.js';
 import type { Vehicle, VehicleConfig, OperationResult } from '../types/index.js';
 
 // ==========================================
@@ -16,28 +16,25 @@ export class CartService {
   private vehicles: Map<string, Vehicle> = new Map();
 
   // ==========================================
-  // HU9 - AGREGAR VEHÍCULO AL CARRITO
-  // Flujo: 
-  // 1. Usuario configura vehículo (8 categorías)
-  // 2. Se guarda en el carrito
-  // 3. Vuelve al menú principal
+  // HU11 - EDITAR CONFIGURACIÓN DE VEHÍCULO
+  // Flujo:
+  // 1. Usuario selecciona vehículo de la lista
+  // 2. Menú: [1] Ver config [2] Editar [3] Cancelar contrato [0] Volver
+  // 3. Si edita: mostrar opciones keyInSelect para cada categoría
   // ==========================================
   @Log()
-  @Validate(createNotEmptyValidator())
   @Validate(createVehicleConfigValidator())
-  addVehicle(name: string, config: VehicleConfig): OperationResult<Vehicle> {
-    const vehicle: Vehicle = {
-      id: generateId(),
-      name: name.trim(),
-      config,
-      createdAt: new Date(),
-      updatedAt: new Date()
-    };
-    this.vehicles.set(vehicle.id, vehicle);
+  updateVehicleConfig(vehicleId: string, newConfig: Partial<VehicleConfig>): OperationResult<Vehicle> {
+    const found = this.findVehicleOrError(vehicleId);
+    if (!found.success) return found;
+    const vehicle = found.vehicle;
+    vehicle.config = { ...vehicle.config, ...newConfig };
+    vehicle.updatedAt = new Date();
+    this.vehicles.set(vehicleId, vehicle);
     return {
       success: true,
       data: vehicle,
-      message: `Vehículo "${vehicle.name}" creado exitosamente con ID: ${vehicle.id}`
+      message: `Configuración de "${vehicle.name}" actualizada exitosamente`
     };
   }
 
