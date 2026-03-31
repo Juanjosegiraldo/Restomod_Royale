@@ -2,10 +2,10 @@ import { generateId } from '../utils/id-generator.js';
 
 // ==========================================
 // CART SERVICE - CRUD del carrito con decoradores
-// Historia: HU11 (Editar)
+// Historia: HU12 (Eliminar)
 // ==========================================
 
-import { Log, Validate, createVehicleConfigValidator } from '../middleware/index.js';
+import { Log, Validate, createNotEmptyValidator } from '../middleware/index.js';
 import type { Vehicle, VehicleConfig, OperationResult } from '../types/index.js';
 
 // ==========================================
@@ -16,35 +16,25 @@ export class CartService {
   private vehicles: Map<string, Vehicle> = new Map();
 
   // ==========================================
-  // HU11 - EDITAR CONFIGURACIÓN DE VEHÍCULO
+  // HU12 - ELIMINAR VEHÍCULO (Cancelar contrato)
   // Flujo:
-  // 1. Usuario selecciona vehículo de la lista
-  // 2. Menú: [1] Ver config [2] Editar [3] Cancelar contrato [0] Volver
-  // 3. Si edita: mostrar opciones keyInSelect para cada categoría
+  // 1. Confirmar con keyInYN: "¿Cancelar contrato? No se puede deshacer"
+  // 2. Si sí: eliminar del map
+  // 3. Retornar resultado
   // ==========================================
   @Log()
-  @Validate(createVehicleConfigValidator())
-  updateVehicleConfig(vehicleId: string, newConfig: Partial<VehicleConfig>): OperationResult<Vehicle> {
-    const found = this.findVehicleOrError(vehicleId);
-    if (!found.success) return found;
-    const vehicle = found.vehicle;
-    vehicle.config = { ...vehicle.config, ...newConfig };
-    vehicle.updatedAt = new Date();
-    this.vehicles.set(vehicleId, vehicle);
+  @Validate(createNotEmptyValidator())
+  removeVehicle(vehicleId: string): OperationResult<void> {
+    if (!this.vehicles.has(vehicleId)) {
+      return {
+        success: false,
+        error: `Vehículo con ID ${vehicleId} no encontrado`
+      };
+    }
+    this.vehicles.delete(vehicleId);
     return {
       success: true,
-      data: vehicle,
-      message: `Configuración de "${vehicle.name}" actualizada exitosamente`
+      message: 'Vehículo eliminado exitosamente'
     };
-  }
-
-  // ==========================================
-  // HELPERS PRIVADOS
-  // ==========================================
-  private findVehicleOrError(vehicleId: string): { success: false; error: string } | { success: true; vehicle: Vehicle } {
-    const vehicle = this.vehicles.get(vehicleId);
-    return vehicle 
-      ? { success: true, vehicle }
-      : { success: false, error: `Vehículo con ID ${vehicleId} no encontrado` };
   }
 }
