@@ -1,4 +1,4 @@
-import { randomUUID } from "crypto"; // ✅ correcto
+import { randomUUID } from "crypto"; 
 
 import { vehicles } from "../data/database.js";
 import { ACCESSORIES, MATERIALS, keyInSelect, keyInYN } from "../config/constants.js"; // ✅ tenía .j
@@ -12,9 +12,6 @@ import type {
 
 export class VehicleService {
 
-  // ==========================
-  // STORY 5 y 6
-  // ==========================
   addAccessories(vehicle: Vehicle): void {
     const accessories: Accessory[] = [];
 
