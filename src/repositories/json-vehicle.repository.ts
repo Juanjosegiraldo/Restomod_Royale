@@ -33,12 +33,25 @@ export class JsonVehicleRepository implements IVehicleRepository {
       const data = fs.readFileSync(this.filePath, 'utf-8');
       const parsed = JSON.parse(data) as any[];
       // Reconstruir objetos VehicleModel desde JSON plano
-      return parsed.map(v => new VehicleModel(
-        v.id,
-        v.name,
-        v.config
-      ));
-    } catch {
+      return parsed.map(v => {
+        const vehicle = new VehicleModel(
+          v.id,
+          v.name,
+          {
+            motor: v._motor || v.config?.motor,
+            pintura: v._pintura || v.config?.pintura,
+            rines: v._rines || v.config?.rines,
+            techo: v._techo || v.config?.techo,
+            interior: v._interior || v.config?.interior,
+            suspension: v._suspension || v.config?.suspension,
+            tecnologia: v._tecnologia || v.config?.tecnologia,
+            llantas: v._llantas || v.config?.llantas,
+          }
+        );
+        return vehicle;
+      });
+    } catch (error) {
+      console.error('Error leyendo archivo:', error);
       return [];
     }
   }
