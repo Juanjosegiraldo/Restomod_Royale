@@ -93,6 +93,7 @@ export const PROMPTS = {
     '  [5] Interior',
     '  [6] Suspension',
     '  [7] Tecnologia',
+    '  [8] Llantas',
     '  [0] Terminar edicion',
     '',
     'Seleccione: '
