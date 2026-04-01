@@ -1,4 +1,4 @@
-import { CONFIG_LABELS, CONFIG_OPTIONS, MENU_OPTIONS, MESSAGES, PROMPTS, keyInSelect, keyInYN, question } from './config/constants';
+import { BASE_PRICE, CONFIG_LABELS, CONFIG_OPTIONS, CONFIG_PRICES, MENU_OPTIONS, MESSAGES, PROMPTS, keyInSelect, keyInYN, question } from './config/constants';
 import { VehicleModel } from './models/vehicle.model';
 import { VehicleService } from './services/vehicle.service';
 import type { Vehicle, VehicleConfig } from './types/interfaces';
@@ -6,6 +6,33 @@ import { generarImagenAuto } from './utils/image-generator';
 import { delay, loading } from './utils/delay';
 
 const vehicleService = new VehicleService();
+
+// Funcion para calcular el precio total de un vehiculo
+function calculateTotalPrice(config: VehicleConfig): number {
+  const motorIndex = CONFIG_OPTIONS.MOTOR.indexOf(config.motor);
+  const pinturaIndex = CONFIG_OPTIONS.PINTURA.indexOf(config.pintura);
+  const rinesIndex = CONFIG_OPTIONS.RINES.indexOf(config.rines);
+  const techoIndex = CONFIG_OPTIONS.TECHO.indexOf(config.techo);
+  const interiorIndex = CONFIG_OPTIONS.INTERIOR.indexOf(config.interior);
+  const suspensionIndex = CONFIG_OPTIONS.SUSPENSION.indexOf(config.suspension);
+  const tecnologiaIndex = CONFIG_OPTIONS.TECNOLOGIA.indexOf(config.tecnologia);
+  const llantasIndex = CONFIG_OPTIONS.LLANTAS.indexOf(config.llantas);
+
+  const motorPrice = CONFIG_PRICES.MOTOR[motorIndex] ?? 0;
+  const pinturaPrice = CONFIG_PRICES.PINTURA[pinturaIndex] ?? 0;
+  const rinesPrice = CONFIG_PRICES.RINES[rinesIndex] ?? 0;
+  const techoPrice = CONFIG_PRICES.TECHO[techoIndex] ?? 0;
+  const interiorPrice = CONFIG_PRICES.INTERIOR[interiorIndex] ?? 0;
+  const suspensionPrice = CONFIG_PRICES.SUSPENSION[suspensionIndex] ?? 0;
+  const tecnologiaPrice = CONFIG_PRICES.TECNOLOGIA[tecnologiaIndex] ?? 0;
+  const llantasPrice = CONFIG_PRICES.LLANTAS[llantasIndex] ?? 0;
+
+  return BASE_PRICE + motorPrice + pinturaPrice + rinesPrice + techoPrice + interiorPrice + suspensionPrice + tecnologiaPrice + llantasPrice;
+}
+
+function formatPrice(price: number): string {
+  return `$${price.toLocaleString('en-US')}`;
+}
 
 function pause(): void {
   question(`\n${PROMPTS.CONTINUE}`);
@@ -64,6 +91,9 @@ function printVehicleConfig(vehicle: Vehicle): void {
   console.log(`${CONFIG_LABELS.SUSPENSION}: ${vehicle.config.suspension}`);
   console.log(`${CONFIG_LABELS.TECNOLOGIA}: ${vehicle.config.tecnologia}`);
   console.log(`${CONFIG_LABELS.LLANTAS}: ${vehicle.config.llantas}`);
+  console.log(`\n----------------------------------------`);
+  console.log(`PRECIO TOTAL: ${formatPrice(calculateTotalPrice(vehicle.config))}`);
+  console.log(`----------------------------------------`);
   console.log(`Creado: ${vehicle.createdAt.toLocaleString()}`);
   console.log(`Actualizado: ${vehicle.updatedAt.toLocaleString()}`);
 }

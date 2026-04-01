@@ -20,6 +20,21 @@ export const CONFIG_OPTIONS = {
   LLANTAS: ['All-Season Touring', 'Sport Performance', 'Racing Slick', 'Off-Road All Terrain', 'Vintage White Wall']
 } as const;
 
+// Precios por opcion (en USD)
+export const CONFIG_PRICES = {
+  MOTOR: [15000, 25000, 18000, 35000, 45000],
+  PINTURA: [2000, 2500, 2200, 1800, 2000, 3500],
+  RINES: [3000, 4000, 5500, 8000, 6500],
+  TECHO: [4000, 6000, 5000, 4500, 7000],
+  INTERIOR: [5000, 6000, 5500, 8000, 7500],
+  SUSPENSION: [3000, 4000, 6000, 8000, 10000],
+  TECNOLOGIA: [2000, 3500, 5000, 7000, 12000],
+  LLANTAS: [800, 1200, 2000, 1500, 1000]
+} as const;
+
+// Precio base del vehiculo
+export const BASE_PRICE = 50000;
+
 export const CONFIG_LABELS = {
   MOTOR: 'Motor',
   PINTURA: 'Pintura',
