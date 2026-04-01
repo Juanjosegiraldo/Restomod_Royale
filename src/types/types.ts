@@ -12,6 +12,8 @@ export type RinesType = typeof CONFIG_OPTIONS.RINES[number];
 export type InteriorType = typeof CONFIG_OPTIONS.INTERIOR[number];
 export type SuspensionType = typeof CONFIG_OPTIONS.SUSPENSION[number];
 export type TecnologiaType = typeof CONFIG_OPTIONS.TECNOLOGIA[number];
+export type TechoType = typeof CONFIG_OPTIONS.TECHO[number];
+export type LlantasType = typeof CONFIG_OPTIONS.LLANTAS[number];
 
 // Constructor para clases genericas
 export type Constructor<T = {}> = new (...args: unknown[]) => T;

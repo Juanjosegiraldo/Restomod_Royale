@@ -15,7 +15,9 @@ export const CONFIG_OPTIONS = {
   RINES: ['18" Classic Chrome', '19" Sport Alloy', '20" Carbon Fiber', '21" Gold Plated', '22" Racing Forged'],
   INTERIOR: ['Black Leather Classic', 'Tan Leather Vintage', 'Red Sport Suede', 'White Luxury Diamond', 'Carbon Fiber Racing'],
   SUSPENSION: ['Comfort Touring', 'Sport Lowered', 'Racing Coilover', 'Air Ride Adjustable', 'Track Performance'],
-  TECNOLOGIA: ['Basic Analog', 'Digital Touch', 'Full Digital + HUD', 'Racing Telemetry', 'Autonomous+Classic UI']
+  TECNOLOGIA: ['Basic Analog', 'Digital Touch', 'Full Digital + HUD', 'Racing Telemetry', 'Autonomous+Classic UI'],
+  TECHO: ['Hardtop Classic', 'Convertible Soft Top', 'Targa Glass', 'Panoramic Roof', 'Carbon Fiber Top'],
+  LLANTAS: ['All-Season Touring', 'Sport Performance', 'Racing Slick', 'Off-Road All Terrain', 'Vintage White Wall']
 } as const;
 
 export const CONFIG_LABELS = {
@@ -24,7 +26,9 @@ export const CONFIG_LABELS = {
   RINES: 'Rines',
   INTERIOR: 'Interior',
   SUSPENSION: 'Suspension',
-  TECNOLOGIA: 'Tecnologia'
+  TECNOLOGIA: 'Tecnologia',
+  TECHO: 'Techo',
+  LLANTAS: 'Llantas'
 } as const;
 
 export const MENU_OPTIONS = {
@@ -86,6 +90,8 @@ export const PROMPTS = {
     '  [4] Interior',
     '  [5] Suspension',
     '  [6] Tecnologia',
+    '  [7] Techo',
+    '  [8] Llantas',
     '  [0] Terminar edicion',
     '',
     'Seleccione: '

@@ -1,11 +1,11 @@
 import { generateId } from '../utils/id-generator.js';
 
 // ==========================================
-// CART SERVICE - CRUD del carrito con decoradores
-// Historia: HU11 (Editar)
+// CART SERVICE - CRUD del carrito
+// Historia: HU9 (Agregar), HU11 (Editar), HU12 (Eliminar)
 // ==========================================
 
-import { Log, Validate, createVehicleConfigValidator } from '../middleware/index.js';
+import { Log, Validate, createVehicleConfigValidator, createNotEmptyValidator } from '../middleware/index.js';
 import type { Vehicle, VehicleConfig, OperationResult } from '../types/index.js';
 
 // ==========================================
@@ -16,17 +16,35 @@ export class CartService {
   private vehicles: Map<string, Vehicle> = new Map();
 
   // ==========================================
-  // HU11 - EDITAR CONFIGURACIÓN DE VEHÍCULO
-  // Flujo:
-  // 1. Usuario selecciona vehículo de la lista
-  // 2. Menú: [1] Ver config [2] Editar [3] Cancelar contrato [0] Volver
-  // 3. Si edita: mostrar opciones keyInSelect para cada categoría
+  // HU9 - AGREGAR VEHÍCULO AL CARRITO
   // ==========================================
   @Log()
+  @Validate(createNotEmptyValidator())
   @Validate(createVehicleConfigValidator())
-  updateVehicleConfig(vehicleId: string, newConfig: Partial<VehicleConfig>): OperationResult<Vehicle> {
+  addVehicle(name: string, config: VehicleConfig): OperationResult<Vehicle> {
+    const vehicle: Vehicle = {
+      id: generateId(),
+      name: name.trim(),
+      config,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    };
+    this.vehicles.set(vehicle.id, vehicle);
+    return {
+      success: true,
+      data: vehicle,
+      message: `Vehículo "${vehicle.name}" creado exitosamente con ID: ${vehicle.id}`
+    };
+  }
+
+  // ==========================================
+  // HU11 - EDITAR CONFIGURACIÓN DE VEHÍCULO
+  // ==========================================
+  @Log()
+  updateVehicle(vehicleId: string, newConfig: Partial<VehicleConfig>): OperationResult<Vehicle> {
     const found = this.findVehicleOrError(vehicleId);
-    if (!found.success) return found;
+    if (!found.success) return { success: false, error: found.error };
+    
     const vehicle = found.vehicle;
     vehicle.config = { ...vehicle.config, ...newConfig };
     vehicle.updatedAt = new Date();
@@ -35,6 +53,45 @@ export class CartService {
       success: true,
       data: vehicle,
       message: `Configuración de "${vehicle.name}" actualizada exitosamente`
+    };
+  }
+
+  // ==========================================
+  // HU12 - ELIMINAR VEHÍCULO (Cancelar contrato)
+  // ==========================================
+  @Log()
+  @Validate(createNotEmptyValidator())
+  removeVehicle(vehicleId: string): OperationResult<void> {
+    if (!this.vehicles.has(vehicleId)) {
+      return {
+        success: false,
+        error: `Vehículo con ID ${vehicleId} no encontrado`
+      };
+    }
+    this.vehicles.delete(vehicleId);
+    return {
+      success: true,
+      message: 'Vehículo eliminado exitosamente'
+    };
+  }
+
+  // ==========================================
+  // HELPERS PÚBLICOS
+  // ==========================================
+  getVehicleById(vehicleId: string): OperationResult<Vehicle> {
+    const vehicle = this.vehicles.get(vehicleId);
+    if (!vehicle) {
+      return { success: false, error: `Vehículo con ID ${vehicleId} no encontrado` };
+    }
+    return { success: true, data: vehicle };
+  }
+
+  getAllVehicles(): OperationResult<Vehicle[]> {
+    const vehicles = Array.from(this.vehicles.values());
+    return {
+      success: true,
+      data: vehicles,
+      message: vehicles.length > 0 ? `${vehicles.length} vehículo(s) en el carrito` : 'Carrito vacío'
     };
   }
 
