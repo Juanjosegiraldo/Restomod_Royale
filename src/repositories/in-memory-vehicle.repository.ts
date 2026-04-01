@@ -3,8 +3,8 @@
 // Aplica: DIP (implementa interfaz abstracta)
 // ==========================================
 
-import type { IVehicleRepository } from './vehicle-repository.interface.js';
-import { Vehicle } from '../models/vehicle.model.js';
+import type { IVehicleRepository } from './vehicle-repository.interface';
+import type { Vehicle } from '../types/interfaces';
 
 export class InMemoryVehicleRepository implements IVehicleRepository {
   private vehicles: Vehicle[] = [];

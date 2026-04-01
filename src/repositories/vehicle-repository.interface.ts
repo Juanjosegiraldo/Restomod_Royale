@@ -3,7 +3,7 @@
 // Aplica: DIP (Dependencia de abstracción)
 // ==========================================
 
-import type { Vehicle } from '../models/vehicle.model.js';
+import type { Vehicle } from '../types/interfaces';
 
 export interface IVehicleRepository {
   findAll(): Vehicle[];

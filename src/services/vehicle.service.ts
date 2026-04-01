@@ -7,38 +7,47 @@
 //      (se elimina la línea vehicle.updatedAt = new Date())
 // Todo lo demás queda idéntico
 // ==========================================
- 
-import { CONFIG_OPTIONS } from '../config/constants.js';
-import { vehicles } from '../data/database.js';
-import { VehicleModel } from '../models/vehicle.model.js';
-import type { OperationResult, Vehicle, VehicleConfig } from '../types/interfaces.js';
-import { generateId } from '../utils/id-generator.js';
- 
+
+import { CONFIG_OPTIONS } from '../config/constants';
+import { Log, Validate } from '../middleware/decorators';
+import { createNotEmptyValidator, createVehicleConfigValidator } from '../middleware/validations';
+import { VehicleModel } from '../models/vehicle.model';
+import { InMemoryVehicleRepository } from '../repositories/in-memory-vehicle.repository';
+import { JsonVehicleRepository } from '../repositories/json-vehicle.repository';
+import type { OperationResult, Vehicle, VehicleConfig } from '../types/interfaces';
+import { generateId } from '../utils/id-generator';
+
+// Repositorio para almacenar vehiculos (persiste en archivo JSON)
+const vehicleRepository = new JsonVehicleRepository();
+
 export class VehicleService {
+  @Log()
   getAllVehicles(): Vehicle[] {
-    return vehicles;
+    return vehicleRepository.findAll();
   }
- 
+
+  @Log()
   getVehicleById(id: string): Vehicle | undefined {
-    return vehicles.find((vehicle) => vehicle.id === id);
+    return vehicleRepository.findById(id);
   }
  
   createVehicle(name: string, config: VehicleConfig): OperationResult<Vehicle> {
     return this.saveVehicle(name, config);
   }
  
+  @Log()
+  @Validate(createNotEmptyValidator())
   saveVehicle(name: string, config: VehicleConfig): OperationResult<Vehicle> {
     const trimmedName = name.trim();
- 
+
     if (!trimmedName) {
       return { success: false, error: 'El nombre del vehiculo es obligatorio.' };
     }
- 
+
     // Ahora es un VehicleModel real en lugar de objeto plano
     const newVehicle = new VehicleModel(generateId(), trimmedName, config);
- 
-    vehicles.push(newVehicle);
- 
+    vehicleRepository.create(newVehicle);
+
     return {
       success: true,
       data: newVehicle,
@@ -46,17 +55,17 @@ export class VehicleService {
     };
   }
  
+  @Log()
+  @Validate(createVehicleConfigValidator())
   updateVehicleConfig(id: string, config: VehicleConfig): OperationResult<Vehicle> {
     const vehicle = this.getVehicleById(id);
- 
+
     if (!vehicle) {
       return { success: false, error: 'No se encontro el vehiculo.' };
     }
- 
-    // El setter config de VehicleModel llama a touch() internamente
-    // ya no necesitamos vehicle.updatedAt = new Date() aquí
-    vehicle.config = config;
- 
+
+    vehicleRepository.update(id, { config });
+
     return {
       success: true,
       data: vehicle,
@@ -64,15 +73,14 @@ export class VehicleService {
     };
   }
  
+  @Log()
   deleteVehicle(id: string): OperationResult {
-    const vehicleIndex = vehicles.findIndex((vehicle) => vehicle.id === id);
- 
-    if (vehicleIndex === -1) {
+    const deleted = vehicleRepository.delete(id);
+
+    if (!deleted) {
       return { success: false, error: 'No se encontro el vehiculo.' };
     }
- 
-    vehicles.splice(vehicleIndex, 1);
- 
+
     return {
       success: true,
       message: 'Contrato cancelado y vehiculo eliminado.',

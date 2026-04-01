@@ -3,8 +3,8 @@
 // Valida configuraciones de vehículo y datos de entrada
 // ==========================================
 
-import type { VehicleConfig, ValidationResult } from '../types/index.js';
-import { CONFIG_OPTIONS } from '../config/constants.js';
+import type { VehicleConfig, ValidationResult } from '../types/index';
+import { CONFIG_OPTIONS } from '../config/constants';
 
 // ==========================================
 // VALIDACIÓN: Configuración completa de vehículo

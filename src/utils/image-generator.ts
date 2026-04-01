@@ -5,10 +5,10 @@
 // Construye un prompt desde la config del auto
 // y abre la imagen en el navegador
 // ==========================================
- 
+
 import { exec } from 'child_process';
-import type { VehicleConfig } from '../types/interfaces.js';
- 
+import type { VehicleConfig } from '../types/interfaces';
+
 // ------------------------------------------
 // Traduce las opciones del proyecto a
 // términos que la IA entiende mejor en inglés

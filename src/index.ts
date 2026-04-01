@@ -1,3 +1,4 @@
+import chalk from 'chalk';
 import { BASE_PRICE, CONFIG_LABELS, CONFIG_OPTIONS, CONFIG_PRICES, MENU_OPTIONS, MESSAGES, PROMPTS, keyInSelect, keyInYN, question } from './config/constants';
 import { VehicleModel } from './models/vehicle.model';
 import { VehicleService } from './services/vehicle.service';
@@ -70,32 +71,34 @@ function configureVehicle(baseConfig?: VehicleConfig): VehicleConfig {
 }
 
 function printVehicleConfig(vehicle: Vehicle): void {
-  console.log('\n========================================');
-  console.log(`Configuracion de ${vehicle.name}`);
-  console.log('========================================');
-  console.log(`ID: ${vehicle.id}`);
+  console.log(chalk.cyan('\n┌──────────────────────────────────────────────────┐'));
+  console.log(chalk.cyan(`│ ${chalk.bold.white(`Configuracion de ${vehicle.name}`).padEnd(46)}        │`));
+  console.log(chalk.cyan('├──────────────────────────────────────────────────┤'));
+  console.log(chalk.gray(`│ ID: ${vehicle.id.padEnd(43)}   │`));
+  console.log(chalk.cyan('├──────────────────────────────────────────────────┤'));
 
   if (vehicle instanceof VehicleModel) {
-    console.log(`${CONFIG_LABELS.MOTOR}: ${vehicle.config.motor}`);
-    console.log(`  ↳ Potencia    : ${vehicle.potenciaHP} HP  |  ${vehicle.categoriaRendimiento}`);
-    console.log(`${CONFIG_LABELS.PINTURA}: ${vehicle.config.pintura}`);
-    console.log(`  ↳ Acabado     : ${vehicle.acabadoPintura}`);
+    console.log(chalk.yellow(`│ [MOTOR] ${CONFIG_LABELS.MOTOR}: ${vehicle.config.motor.padEnd(26)} │`));
+    console.log(chalk.dim(`│    Potencia: ${vehicle.potenciaHP} HP | ${vehicle.categoriaRendimiento}`.padEnd(49) + ' │'));
+    console.log(chalk.yellow(`│ [PINTURA] ${CONFIG_LABELS.PINTURA}: ${vehicle.config.pintura.padEnd(24)} │`));
+    console.log(chalk.dim(`│    Acabado: ${vehicle.acabadoPintura}`.padEnd(49) + ' │'));
   } else {
-    console.log(`${CONFIG_LABELS.MOTOR}: ${vehicle.config.motor}`);
-    console.log(`${CONFIG_LABELS.PINTURA}: ${vehicle.config.pintura}`);
+    console.log(chalk.yellow(`│ [MOTOR] ${CONFIG_LABELS.MOTOR}: ${vehicle.config.motor.padEnd(26)} │`));
+    console.log(chalk.yellow(`│ [PINTURA] ${CONFIG_LABELS.PINTURA}: ${vehicle.config.pintura.padEnd(24)} │`));
   }
 
-  console.log(`${CONFIG_LABELS.RINES}: ${vehicle.config.rines}`);
-  console.log(`${CONFIG_LABELS.TECHO}: ${vehicle.config.techo}`);
-  console.log(`${CONFIG_LABELS.INTERIOR}: ${vehicle.config.interior}`);
-  console.log(`${CONFIG_LABELS.SUSPENSION}: ${vehicle.config.suspension}`);
-  console.log(`${CONFIG_LABELS.TECNOLOGIA}: ${vehicle.config.tecnologia}`);
-  console.log(`${CONFIG_LABELS.LLANTAS}: ${vehicle.config.llantas}`);
-  console.log(`\n----------------------------------------`);
-  console.log(`PRECIO TOTAL: ${formatPrice(calculateTotalPrice(vehicle.config))}`);
-  console.log(`----------------------------------------`);
-  console.log(`Creado: ${vehicle.createdAt.toLocaleString()}`);
-  console.log(`Actualizado: ${vehicle.updatedAt.toLocaleString()}`);
+  console.log(chalk.blue(`│ [RINES] ${CONFIG_LABELS.RINES}: ${vehicle.config.rines.padEnd(28)} │`));
+  console.log(chalk.blue(`│ [TECHO] ${CONFIG_LABELS.TECHO}: ${vehicle.config.techo.padEnd(28)} │`));
+  console.log(chalk.magenta(`│ [INTERIOR] ${CONFIG_LABELS.INTERIOR}: ${vehicle.config.interior.padEnd(25)} │`));
+  console.log(chalk.green(`│ [SUSPENSION] ${CONFIG_LABELS.SUSPENSION}: ${vehicle.config.suspension.padEnd(23)} │`));
+  console.log(chalk.cyan(`│ [TECNOLOGIA] ${CONFIG_LABELS.TECNOLOGIA}: ${vehicle.config.tecnologia.padEnd(23)} │`));
+  console.log(chalk.red(`│ [LLANTAS] ${CONFIG_LABELS.LLANTAS}: ${vehicle.config.llantas.padEnd(26)} │`));
+  console.log(chalk.cyan('├──────────────────────────────────────────────────┤'));
+  console.log(chalk.hex('#FFD700').bold(`│ >> PRECIO TOTAL: ${formatPrice(calculateTotalPrice(vehicle.config)).padEnd(28)} │`));
+  console.log(chalk.cyan('├──────────────────────────────────────────────────┤'));
+  console.log(chalk.gray(`│ Creado: ${vehicle.createdAt.toLocaleString().padEnd(38)} │`));
+  console.log(chalk.gray(`│ Actualizado: ${vehicle.updatedAt.toLocaleString().padEnd(33)} │`));
+  console.log(chalk.cyan('└──────────────────────────────────────────────────┘'));
 }
 
 // ─────────────────────────────────────────

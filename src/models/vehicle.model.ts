@@ -3,11 +3,10 @@
 // Clases, constructores, modificadores de acceso y herencia
 // Stories: 1 (Motor), 2 (Pintura), 7 (Potencia)
 // ==========================================
- 
-import { CONFIG_OPTIONS } from '../config/constants.js';
-import type { Entity, Vehicle as IVehicle, VehicleConfig } from '../types/interfaces.js';
-import type { MotorType, PinturaType } from '../types/types.js';
- 
+
+import type { Entity, Vehicle as IVehicle, VehicleConfig } from '../types/interfaces';
+import type { MotorType, PinturaType } from '../types/types';
+
 // ------------------------------------------
 // Mapa de potencia por motor (Story 7)
 // Derivado 1:1 de CONFIG_OPTIONS.MOTOR — sin duplicar las opciones
