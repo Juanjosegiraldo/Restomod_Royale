@@ -47,33 +47,21 @@ export function Log(): MethodDecorator {
 
 // ==========================================
 // DECORADOR @Validate - Validación de argumentos
-// Uso: @Validate(validatorFn) methodName(arg) { }
-// Acción: Ejecuta validador antes del método, lanza error si falla
 // ==========================================
 export function Validate(validator: (args: unknown[]) => boolean | string): MethodDecorator {
-  return function (
-    target: object,
-    propertyKey: string | symbol,
-    descriptor: PropertyDescriptor
-  ): void {
+  return function (target: object, propertyKey: string | symbol, descriptor: PropertyDescriptor): void {
     const originalMethod = descriptor.value;
-    
     descriptor.value = function (...args: unknown[]) {
       const methodName = String(propertyKey);
       const validationResult = validator(args);
-      
       if (validationResult !== true) {
-        const errorMessage = typeof validationResult === 'string' 
-          ? validationResult 
-          : `Validación fallida en ${methodName}()`;
+        const errorMessage = typeof validationResult === 'string' ? validationResult : `Validación fallida en ${methodName}()`;
         console.error(`[VALIDATE - ERROR] ${methodName}(): ${errorMessage}`);
         throw new Error(errorMessage);
       }
-      
       console.log(`[VALIDATE - OK] ${methodName}() validación exitosa`);
       return originalMethod.apply(this, args);
     };
-    
     Reflect.defineMetadata(VALIDATION_KEY, validator, target, propertyKey);
   };
 }

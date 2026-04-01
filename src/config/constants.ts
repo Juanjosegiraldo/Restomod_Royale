@@ -13,7 +13,7 @@ export const CONFIG_OPTIONS = {
   MOTOR: ['V8 5.0L Classic', 'V8 6.2L Supercharged', 'V6 3.5L Twin-Turbo', 'Electric 800HP', 'V12 7.0L Racing'],
   PINTURA: ['Midnight Black', 'Racing Red', 'Pearl White', 'Gunmetal Gray', 'Ocean Blue', 'Gold Rush'],
   RINES: ['18" Classic Chrome', '19" Sport Alloy', '20" Carbon Fiber', '21" Gold Plated', '22" Racing Forged'],
-  TECHO: ['Hardtop Clasico', 'Convertible Electrico', 'Targa Carbon Edition'],
+  TECHO: ['Hardtop Classic', 'Convertible Soft Top', 'Targa Glass', 'Panoramic Roof', 'Carbon Fiber Top'],
   INTERIOR: ['Black Leather Classic', 'Tan Leather Vintage', 'Red Sport Suede', 'White Luxury Diamond', 'Carbon Fiber Racing'],
   SUSPENSION: ['Comfort Touring', 'Sport Lowered', 'Racing Coilover', 'Air Ride Adjustable', 'Track Performance'],
   TECNOLOGIA: ['Basic Analog', 'Digital Touch', 'Full Digital + HUD', 'Racing Telemetry', 'Autonomous+Classic UI'],

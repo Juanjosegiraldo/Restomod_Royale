@@ -60,9 +60,9 @@ export class VehicleModel extends BaseEntity implements IVehicle {
   // public: el name se lee/escribe desde el service y la UI
   public name: string;
 
-  // private: motor y pintura solo se cambian por sus setters
-  private _motor: MotorType;
-  private _pintura: PinturaType;
+  // protected: motor y pintura solo se cambian por sus setters
+  protected _motor: MotorType;
+  protected _pintura: PinturaType;
 
   // protected: el resto de la config es accesible en subclases
   protected _rines:      VehicleConfig['rines'];
@@ -188,5 +188,27 @@ export class RestromodPremium extends VehicleModel {
       'Track Performance',
     ];
     return premium.includes(this._suspension);
+  }
+}
+
+// ==========================================
+// CLASE Vehicle (para HU12 - compatibilidad)
+// ==========================================
+export class Vehicle extends VehicleModel {
+  static create(name: string, config: VehicleConfig): Vehicle {
+    const id = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+    return new Vehicle(id, name, config);
+  }
+
+  updateConfig(config: Partial<VehicleConfig>): void {
+    if (config.motor) this._motor = config.motor;
+    if (config.pintura) this._pintura = config.pintura;
+    if (config.rines) this._rines = config.rines;
+    if (config.techo) this._techo = config.techo;
+    if (config.interior) this._interior = config.interior;
+    if (config.suspension) this._suspension = config.suspension;
+    if (config.tecnologia) this._tecnologia = config.tecnologia;
+    if (config.llantas) this._llantas = config.llantas;
+    this.touch();
   }
 }

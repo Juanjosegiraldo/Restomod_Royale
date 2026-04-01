@@ -1,95 +1,60 @@
 // ==========================================
-// VEHICLE SERVICE
-// Cambios mínimos respecto al original:
-//   1. Crea VehicleModel en vez de objeto plano
-//   2. Usa generateId() de utils/id-generator
-//   3. El setter config de VehicleModel actualiza updatedAt solo
-//      (se elimina la línea vehicle.updatedAt = new Date())
-// Todo lo demás queda idéntico
+// SERVICE LAYER - Logica de negocio
+// Aplica: SRP (orquesta repositorio), DIP (inyeccion de dependencias)
 // ==========================================
- 
-import { CONFIG_OPTIONS } from '../config/constants.js';
-import { vehicles } from '../data/database.js';
-import { VehicleModel } from '../models/vehicle.model.js';
-import type { OperationResult, Vehicle, VehicleConfig } from '../types/interfaces.js';
-import { generateId } from '../utils/id-generator.js';
- 
+
+import type { IVehicleRepository } from '../repositories/vehicle-repository.interface.js';
+import type { VehicleConfig } from '../types/index.js';
+import { Vehicle } from '../models/vehicle.model.js';
+import type { OperationResult } from '../types/index.js';
+
 export class VehicleService {
-  getAllVehicles(): Vehicle[] {
-    return vehicles;
-  }
- 
-  getVehicleById(id: string): Vehicle | undefined {
-    return vehicles.find((vehicle) => vehicle.id === id);
-  }
- 
-  createVehicle(name: string, config: VehicleConfig): OperationResult<Vehicle> {
-    return this.saveVehicle(name, config);
-  }
- 
-  saveVehicle(name: string, config: VehicleConfig): OperationResult<Vehicle> {
-    const trimmedName = name.trim();
- 
-    if (!trimmedName) {
-      return { success: false, error: 'El nombre del vehiculo es obligatorio.' };
+  constructor(private readonly repository: IVehicleRepository) {}
+
+  create(name: string, config: VehicleConfig): OperationResult<Vehicle> {
+    try {
+      const vehicle = Vehicle.create(name, config);
+      const saved = this.repository.create(vehicle);
+      return { success: true, data: saved, message: 'Vehiculo creado' };
+    } catch (error) {
+      return { success: false, error: (error as Error).message };
     }
- 
-    // Ahora es un VehicleModel real en lugar de objeto plano
-    const newVehicle = new VehicleModel(generateId('veh'), trimmedName, config);
- 
-    vehicles.push(newVehicle);
- 
-    return {
-      success: true,
-      data: newVehicle,
-      message: 'Vehiculo guardado exitosamente!',
-    };
   }
- 
-  updateVehicleConfig(id: string, config: VehicleConfig): OperationResult<Vehicle> {
-    const vehicle = this.getVehicleById(id);
- 
+
+  getById(id: string): OperationResult<Vehicle> {
+    const vehicle = this.repository.findById(id);
     if (!vehicle) {
-      return { success: false, error: 'No se encontro el vehiculo.' };
+      return { success: false, error: 'Vehiculo no encontrado' };
     }
- 
-    // El setter config de VehicleModel llama a touch() internamente
-    // ya no necesitamos vehicle.updatedAt = new Date() aquí
-    vehicle.config = config;
- 
-    return {
-      success: true,
-      data: vehicle,
-      message: 'Configuracion actualizada!',
+    return { success: true, data: vehicle };
+  }
+
+  listAll(): OperationResult<Vehicle[]> {
+    const vehicles = this.repository.findAll();
+    return { 
+      success: true, 
+      data: vehicles, 
+      message: vehicles.length > 0 ? `${vehicles.length} vehiculos` : 'Sin vehiculos' 
     };
   }
- 
-  deleteVehicle(id: string): OperationResult {
-    const vehicleIndex = vehicles.findIndex((vehicle) => vehicle.id === id);
- 
-    if (vehicleIndex === -1) {
-      return { success: false, error: 'No se encontro el vehiculo.' };
+
+  updateConfig(id: string, config: Partial<VehicleConfig>): OperationResult<Vehicle> {
+    const vehicle = this.repository.findById(id);
+    if (!vehicle) {
+      return { success: false, error: 'Vehiculo no encontrado' };
     }
- 
-    vehicles.splice(vehicleIndex, 1);
- 
-    return {
-      success: true,
-      message: 'Contrato cancelado y vehiculo eliminado.',
-    };
+    vehicle.updateConfig(config);
+    return { success: true, data: vehicle, message: 'Configuracion actualizada' };
   }
- 
-  createDefaultConfig(): VehicleConfig {
-    return {
-      motor:      CONFIG_OPTIONS.MOTOR[0],
-      pintura:    CONFIG_OPTIONS.PINTURA[0],
-      rines:      CONFIG_OPTIONS.RINES[0],
-      techo:      CONFIG_OPTIONS.TECHO[0],
-      interior:   CONFIG_OPTIONS.INTERIOR[0],
-      suspension: CONFIG_OPTIONS.SUSPENSION[0],
-      tecnologia: CONFIG_OPTIONS.TECNOLOGIA[0],
-      llantas:    CONFIG_OPTIONS.LLANTAS[0],
-    };
+
+  delete(id: string): OperationResult<void> {
+    const exists = this.repository.findById(id);
+    if (!exists) {
+      return { success: false, error: 'Vehiculo no encontrado' };
+    }
+    const deleted = this.repository.delete(id);
+    return deleted 
+      ? { success: true, message: 'Contrato cancelado' }
+      : { success: false, error: 'Error al eliminar' };
   }
 }
- 

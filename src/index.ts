@@ -1,5 +1,5 @@
 // ==========================================
-// RESTOMOD ROYALE - HU11 (Editar Vehículo)
+// RESTOMOD ROYALE - HU12 (Eliminar Vehículo)
 // Entry point - Demonstrates CartService functionality
 // ==========================================
 
@@ -8,51 +8,65 @@ import { CONFIG_OPTIONS } from './config/constants.js';
 import type { VehicleConfig } from './types/index.js';
 
 console.log('========================================');
-console.log('   RESTOMOD ROYALE - HU11 (Edit Vehicle) ');
+console.log('   RESTOMOD ROYALE - HU12 (Delete Vehicle) ');
 console.log('========================================\n');
 
 const cartService = new CartService();
 
-// Demo: Create a vehicle with full config
-const demoConfig: VehicleConfig = {
-  motor: CONFIG_OPTIONS.MOTOR[1],
-  pintura: CONFIG_OPTIONS.PINTURA[2],
-  rines: CONFIG_OPTIONS.RINES[1],
-  interior: CONFIG_OPTIONS.INTERIOR[2],
-  suspension: CONFIG_OPTIONS.SUSPENSION[1],
-  tecnologia: CONFIG_OPTIONS.TECNOLOGIA[2],
-  techo: CONFIG_OPTIONS.TECHO[1],
-  llantas: CONFIG_OPTIONS.LLANTAS[2]
-};
+// Demo: Create multiple vehicles
+const configs: VehicleConfig[] = [
+  {
+    motor: CONFIG_OPTIONS.MOTOR[2],
+    pintura: CONFIG_OPTIONS.PINTURA[3],
+    rines: CONFIG_OPTIONS.RINES[2],
+    interior: CONFIG_OPTIONS.INTERIOR[3],
+    suspension: CONFIG_OPTIONS.SUSPENSION[2],
+    tecnologia: CONFIG_OPTIONS.TECNOLOGIA[3],
+    techo: CONFIG_OPTIONS.TECHO[2],
+    llantas: CONFIG_OPTIONS.LLANTAS[1]
+  },
+  {
+    motor: CONFIG_OPTIONS.MOTOR[3],
+    pintura: CONFIG_OPTIONS.PINTURA[1],
+    rines: CONFIG_OPTIONS.RINES[4],
+    interior: CONFIG_OPTIONS.INTERIOR[4],
+    suspension: CONFIG_OPTIONS.SUSPENSION[3],
+    tecnologia: CONFIG_OPTIONS.TECNOLOGIA[4],
+    techo: CONFIG_OPTIONS.TECHO[3],
+    llantas: CONFIG_OPTIONS.LLANTAS[4]
+  }
+];
 
-console.log('1. Creating vehicle...');
-const createResult = cartService.addVehicle('My Sport Camaro', demoConfig);
-console.log('Result:', createResult);
+console.log('1. Creating vehicles...');
+const result1 = cartService.addVehicle('First Vehicle', configs[0]!);
+const result2 = cartService.addVehicle('Second Vehicle', configs[1]!);
+console.log('Result 1:', result1);
+console.log('Result 2:', result2);
 
-if (createResult.success && createResult.data) {
-  const vehicleId = createResult.data.id;
+console.log('\n2. Listing all vehicles...');
+const listResult = cartService.getAllVehicles();
+console.log('Result:', listResult);
 
-  console.log('\n2. Editing vehicle (changing multiple fields)...');
-  const updateResult = cartService.updateVehicle(vehicleId, {
-    pintura: CONFIG_OPTIONS.PINTURA[4],
-    rines: CONFIG_OPTIONS.RINES[3],
-    llantas: CONFIG_OPTIONS.LLANTAS[3]
-  });
-  console.log('Result:', updateResult);
+if (result1.success && result1.data) {
+  const vehicleId = result1.data.id;
 
-  console.log('\n3. Getting updated vehicle...');
-  const getResult = cartService.getVehicleById(vehicleId);
-  console.log('Result:', getResult);
-
-  console.log('\n4. Testing edit non-existing vehicle (should fail)...');
-  const failResult = cartService.updateVehicle('invalid-id', { motor: CONFIG_OPTIONS.MOTOR[0] });
-  console.log('Result:', failResult);
-
-  console.log('\n5. Removing vehicle...');
+  console.log('\n3. Deleting first vehicle...');
   const deleteResult = cartService.removeVehicle(vehicleId);
   console.log('Result:', deleteResult);
+
+  console.log('\n4. Verifying deletion (should fail)...');
+  const verifyResult = cartService.getVehicleById(vehicleId);
+  console.log('Result:', verifyResult);
+
+  console.log('\n5. Testing delete non-existing vehicle (should fail)...');
+  const failResult = cartService.removeVehicle('non-existing-id');
+  console.log('Result:', failResult);
 }
 
+console.log('\n6. Listing remaining vehicles...');
+const finalList = cartService.getAllVehicles();
+console.log('Result:', finalList);
+
 console.log('\n========================================');
-console.log('   HU11 Demo Complete!                ');
+console.log('   HU12 Demo Complete!                 ');
 console.log('========================================');
