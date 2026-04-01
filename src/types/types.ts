@@ -15,17 +15,5 @@ export type TecnologiaType = typeof CONFIG_OPTIONS.TECNOLOGIA[number];
 export type TechoType = typeof CONFIG_OPTIONS.TECHO[number];
 export type LlantasType = typeof CONFIG_OPTIONS.LLANTAS[number];
 
-// Configuracion completa del vehiculo
-export interface VehicleConfig {
-  motor: MotorType;
-  pintura: PinturaType;
-  rines: RinesType;
-  interior: InteriorType;
-  suspension: SuspensionType;
-  tecnologia: TecnologiaType;
-  techo: TechoType;
-  llantas: LlantasType;
-}
-
 // Constructor para clases genericas
 export type Constructor<T = {}> = new (...args: unknown[]) => T;
