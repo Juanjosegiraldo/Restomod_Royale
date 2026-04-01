@@ -13,14 +13,15 @@ function matchesOption(input: string, aliases: readonly string[]): boolean {
 }
 
 function selectOption<T extends string>(options: readonly T[], prompt: string, currentValue?: T): T {
+  const fallbackOption = options[0]!;
   const label = currentValue ? `${prompt}\nActual: ${currentValue}` : prompt;
   const selectedIndex = keyInSelect([...options], `${label}\n`);
 
   if (selectedIndex === -1) {
-    return currentValue ?? options[0];
+    return currentValue ?? fallbackOption;
   }
 
-  return options[selectedIndex] ?? options[0];
+  return options[selectedIndex] ?? fallbackOption;
 }
 
 function configureVehicle(baseConfig?: VehicleConfig): VehicleConfig {
