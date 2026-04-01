@@ -12,6 +12,10 @@ export class VehicleService {
   }
 
   createVehicle(name: string, config: VehicleConfig): OperationResult<Vehicle> {
+    return this.saveVehicle(name, config);
+  }
+
+  saveVehicle(name: string, config: VehicleConfig): OperationResult<Vehicle> {
     const trimmedName = name.trim();
 
     if (!trimmedName) {
@@ -31,7 +35,7 @@ export class VehicleService {
     return {
       success: true,
       data: newVehicle,
-      message: 'Vehiculo creado exitosamente!'
+      message: 'Vehiculo guardado exitosamente!'
     };
   }
 

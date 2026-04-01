@@ -114,6 +114,7 @@ export const PROMPTS = {
 
 export const MESSAGES = {
   SUCCESS_CREATED: 'Vehiculo creado exitosamente!',
+  SUCCESS_SAVED: 'Vehiculo guardado exitosamente!',
   SUCCESS_UPDATED: 'Configuracion actualizada!',
   SUCCESS_DELETED: 'Contrato cancelado y vehiculo eliminado.',
   SUCCESS_EXIT: 'Gracias por usar Restomod Royale. Hasta pronto!',

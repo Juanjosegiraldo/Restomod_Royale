@@ -41,6 +41,7 @@ function printVehicleConfig(vehicle: Vehicle): void {
   console.log('\n========================================');
   console.log(`Configuracion de ${vehicle.name}`);
   console.log('========================================');
+  console.log(`ID: ${vehicle.id}`);
   console.log(`${CONFIG_LABELS.MOTOR}: ${vehicle.config.motor}`);
   console.log(`${CONFIG_LABELS.PINTURA}: ${vehicle.config.pintura}`);
   console.log(`${CONFIG_LABELS.RINES}: ${vehicle.config.rines}`);
@@ -48,6 +49,8 @@ function printVehicleConfig(vehicle: Vehicle): void {
   console.log(`${CONFIG_LABELS.INTERIOR}: ${vehicle.config.interior}`);
   console.log(`${CONFIG_LABELS.SUSPENSION}: ${vehicle.config.suspension}`);
   console.log(`${CONFIG_LABELS.TECNOLOGIA}: ${vehicle.config.tecnologia}`);
+  console.log(`Creado: ${vehicle.createdAt.toLocaleString()}`);
+  console.log(`Actualizado: ${vehicle.updatedAt.toLocaleString()}`);
 }
 
 function createVehicleFlow(): void {
@@ -60,7 +63,7 @@ function createVehicleFlow(): void {
   }
 
   const vehicleConfig = configureVehicle();
-  const result = vehicleService.createVehicle(vehicleName, vehicleConfig);
+  const result = vehicleService.saveVehicle(vehicleName, vehicleConfig);
 
   console.log(result.message ?? result.error ?? MESSAGES.ERROR_INVALID);
 
