@@ -1,38 +1,46 @@
 # Restomod Royale
 
-## Descripción
+## Overview
 
-Restomod Royale es una aplicación dedicada a la personalización y construcción de autos clásicos según las preferencias del cliente. La plataforma permite diseñar vehículos combinando estilos clásicos con tecnologías modernas, ofreciendo distintas opciones de configuración como motor, color, llantas y accesorios.
+**Restomod Royale** is a console-based application designed to customize and build classic cars based on customer preferences.
 
-El objetivo de la aplicación es permitir que los usuarios puedan visualizar, configurar y guardar diseños de autos personalizados antes de solicitar su construcción.
+The platform allows users to design vehicles by combining **classic automotive styles with modern technology**, offering different configuration options such as:
 
----
+- Engine
+- Color
+- Wheels
+- Roof
+- Accessories
 
-## Metodología de trabajo
-
-El proyecto se organiza utilizando la metodología Scrum, estructurando el desarrollo mediante épicas y historias de usuario.
-
----
-
-## Épica
-
-### Diseño y personalización de autos clásicos
-
-Permitir que los clientes diseñen autos clásicos personalizados seleccionando diferentes componentes del vehículo, combinando estilo clásico con tecnología moderna.
+The main goal of the application is to allow users to **visualize, configure, and save customized car designs** before requesting their construction.
 
 ---
 
-## Historia de Usuario
+# Development Methodology
 
-**HU01 – Personalizar auto clásico**
-
-Como cliente,  
-quiero seleccionar las características de un auto clásico,  
-para diseñar un vehículo personalizado según mis preferencias.
+This project follows the **Scrum methodology**, organizing development through **Epics** and **User Stories** to ensure structured and incremental progress.
 
 ---
 
-## Tecnologías utilizadas
+# Epic
+
+## Classic Car Design and Customization
+
+Allow customers to design personalized classic cars by selecting different vehicle components while combining **classic style with modern technology**.
+
+---
+
+# User Story
+
+### US01 – Customize Classic Car
+
+**As a** customer  
+**I want** to select the characteristics of a classic car  
+**So that** I can design a vehicle according to my personal preferences.
+
+---
+
+# Technologies Used
 
 - TypeScript
 - Node.js
@@ -40,69 +48,90 @@ para diseñar un vehículo personalizado según mis preferencias.
 - GitHub
 - Scrum
 
+---
 
+# Application Description
 
+Restomod Royale is a **CRUD console application** developed with **TypeScript** that allows users to create and manage customized classic vehicles.
 
+Users can:
 
-
-
-
-
-
-
-
-# Restomod Royale
-
-Aplicacion CRUD de personalizacion de autos clasicos - TypeScript (Console Edition).
+- Create custom vehicles
+- Configure vehicle components
+- Store vehicle configurations
+- Manage customized builds
 
 ---
 
-## Requisitos
+# Requirements
 
-- Node.js >= 20.0.0
+- Node.js **>= 20.0.0**
 
 ---
 
-## Inicio Rapido
+# Quick Start
+
+Install dependencies:
 
 ```bash
 npm install
-npm run dev      # Desarrollo con hot-reload
+```
+
+Run the project in development mode:
+
+```bash
+npm run dev
 ```
 
 ---
 
-## Estructura
+# Project Structure
 
 ```
 src/
-└── index.ts              # Todo el codigo aqui
+└── index.ts              # Main application entry point
 ```
 
 ---
 
-## Caracteristicas
+# Features
 
-- Target ESNext
-- Decoradores habilitados
-- Namespaces Vehicle y Cart
-- Tipado estricto
-
----
-
-## Product Backlog
-
-- RR-01 al RR-12: Motor, color, llantas, techo, accesorios, carrito, CRUD completo
+- ESNext target
+- Strict TypeScript typing
+- Console-based interface
+- Modular architecture
+- Vehicle customization system
+- CRUD operations for vehicle management
 
 ---
 
-## Scripts
+# Product Backlog
 
-| Script         | Descripcion                    |
-|----------------|--------------------------------|
-| npm run dev    | Ejecuta con watch activado     |
-| npm run typecheck | Verifica tipos sin ejecutar |
+| ID | Feature |
+|----|--------|
+| RR-01 | Engine selection |
+| RR-02 | Color customization |
+| RR-03 | Wheel selection |
+| RR-04 | Roof configuration |
+| RR-05 | Accessories |
+| RR-06 | Shopping cart |
+| RR-07 | Create vehicle |
+| RR-08 | Read vehicle |
+| RR-09 | Update vehicle |
+| RR-10 | Delete vehicle |
+| RR-11 | Vehicle configuration system |
+| RR-12 | Complete CRUD system |
 
 ---
 
-Listo para codear!
+# Available Scripts
+
+| Script | Description |
+|------|-------------|
+| `npm run dev` | Runs the project in development mode with watch |
+| `npm run typecheck` | Checks TypeScript types without running the project |
+
+---
+
+# Ready to Build 🚗
+Start customizing your classic cars with **Restomod Royale**.
