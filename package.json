@@ -4,7 +4,8 @@
   "description": "Aplicacion CRUD de personalizacion de autos clasicos - TypeScript",
   "main": "src/index.ts",
   "scripts": {
-    "dev": "tsx watch src/index.ts",
+    "dev": "tsx src/index.ts",
+    "dev:watch": "tsx watch src/index.ts",
     "typecheck": "tsc --noEmit"
   },
   "keywords": [

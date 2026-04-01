@@ -2,8 +2,8 @@
 // UTILS - Generador de IDs y formateadores
 // ==========================================
 
-export function generateId(): string {
-  return `${Date.now().toString(36)}-${Math.random().toString(36).substring(2, 9)}`;
+export function generateId(prefix: string = 'veh'): string {
+  return `${prefix}-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
 }
 
 export function formatCurrency(amount: number): string {

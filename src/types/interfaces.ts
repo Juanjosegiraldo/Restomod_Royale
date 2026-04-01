@@ -2,18 +2,17 @@
 // INTERFACES - Interfaces del sistema
 // ==========================================
 
-import type { MotorType, PinturaType, RinesType, InteriorType, SuspensionType, TecnologiaType, TechoType, LlantasType } from './types.js';
+import type { MotorType, PinturaType, RinesType, TechoType, InteriorType, SuspensionType, TecnologiaType } from './types.js';
 
 // Configuracion completa del vehiculo
 export interface VehicleConfig {
   motor: MotorType;
   pintura: PinturaType;
   rines: RinesType;
+  techo: TechoType;
   interior: InteriorType;
   suspension: SuspensionType;
   tecnologia: TecnologiaType;
-  techo: TechoType;
-  llantas: LlantasType;
 }
 
 // Entidad base con ID y timestamps
