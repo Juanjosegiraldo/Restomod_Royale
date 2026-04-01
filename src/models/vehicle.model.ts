@@ -59,18 +59,19 @@ export class VehicleModel extends BaseEntity implements IVehicle {
  
   // public: el name se lee/escribe desde el service y la UI
   public name: string;
- 
+
   // private: motor y pintura solo se cambian por sus setters
   private _motor: MotorType;
   private _pintura: PinturaType;
- 
+
   // protected: el resto de la config es accesible en subclases
   protected _rines:      VehicleConfig['rines'];
   protected _techo:      VehicleConfig['techo'];
   protected _interior:   VehicleConfig['interior'];
   protected _suspension: VehicleConfig['suspension'];
   protected _tecnologia: VehicleConfig['tecnologia'];
- 
+  protected _llantas:    VehicleConfig['llantas'];
+
   constructor(id: string, name: string, config: VehicleConfig) {
     super(id);                          // BaseEntity → id, timestamps
     this.name        = name;
@@ -81,54 +82,55 @@ export class VehicleModel extends BaseEntity implements IVehicle {
     this._interior   = config.interior;
     this._suspension = config.suspension;
     this._tecnologia = config.tecnologia;
+    this._llantas    = config.llantas;
   }
- 
+
   // ------------------------------------------
   // Story 1 – Motor: getter/setter controlado
   // ------------------------------------------
   get motor(): MotorType {
     return this._motor;
   }
- 
+
   set motor(value: MotorType) {
     this._motor = value;
     this.touch();   // actualiza updatedAt automáticamente
   }
- 
+
   // ------------------------------------------
   // Story 7 – Potencia: calculada desde el motor, solo lectura
   // ------------------------------------------
   get potenciaHP(): number {
     return MOTOR_POTENCIA[this._motor];
   }
- 
+
   get categoriaRendimiento(): string {
     const hp = this.potenciaHP;
-    if (hp >= 700) return 'EXTREMO 🔥';
-    if (hp >= 500) return 'ALTO ⚡';
-    if (hp >= 350) return 'MEDIO 🚗';
-    return 'CLASICO 🏛️';
+    if (hp >= 700) return 'EXTREMO ';
+    if (hp >= 500) return 'ALTO ';
+    if (hp >= 350) return 'MEDIO ';
+    return 'CLASICO ';
   }
- 
+
   // ------------------------------------------
   // Story 2 – Pintura: getter/setter controlado
   // ------------------------------------------
   get pintura(): PinturaType {
     return this._pintura;
   }
- 
+
   set pintura(value: PinturaType) {
     this._pintura = value;
     this.touch();
   }
- 
+
   get acabadoPintura(): string {
     const p = this._pintura.toLowerCase();
-    if (p.includes('gold') || p.includes('pearl')) return 'Premium ✨';
-    if (p.includes('racing') || p.includes('midnight')) return 'Sport 🏎️';
-    return 'Clasico 🎨';
+    if (p.includes('gold') || p.includes('pearl')) return 'Premium ';
+    if (p.includes('racing') || p.includes('midnight')) return 'Sport ';
+    return 'Clasico ';
   }
- 
+
   // ------------------------------------------
   // Propiedad config — mantiene compatibilidad total con
   // vehicle.service.ts e index.ts sin tocar esos archivos
@@ -142,9 +144,10 @@ export class VehicleModel extends BaseEntity implements IVehicle {
       interior:   this._interior,
       suspension: this._suspension,
       tecnologia: this._tecnologia,
+      llantas:    this._llantas,
     };
   }
- 
+
   set config(newConfig: VehicleConfig) {
     this._motor      = newConfig.motor;
     this._pintura    = newConfig.pintura;
@@ -153,10 +156,11 @@ export class VehicleModel extends BaseEntity implements IVehicle {
     this._interior   = newConfig.interior;
     this._suspension = newConfig.suspension;
     this._tecnologia = newConfig.tecnologia;
+    this._llantas    = newConfig.llantas;
     this.touch();
   }
 }
- 
+
 // ==========================================
 // SUBCLASE: RestromodPremium
 // Hereda VehicleModel — demuestra herencia real

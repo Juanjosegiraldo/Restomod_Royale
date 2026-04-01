@@ -38,6 +38,7 @@ function configureVehicle(baseConfig?: VehicleConfig): VehicleConfig {
     interior:   selectOption(CONFIG_OPTIONS.INTERIOR,   PROMPTS.SELECT_INTERIOR,   currentConfig.interior),
     suspension: selectOption(CONFIG_OPTIONS.SUSPENSION, PROMPTS.SELECT_SUSPENSION, currentConfig.suspension),
     tecnologia: selectOption(CONFIG_OPTIONS.TECNOLOGIA, PROMPTS.SELECT_TECNOLOGIA, currentConfig.tecnologia),
+    llantas:    selectOption(CONFIG_OPTIONS.LLANTAS,    PROMPTS.SELECT_LLANTAS,    currentConfig.llantas),
   };
 }
  
@@ -62,6 +63,7 @@ function printVehicleConfig(vehicle: Vehicle): void {
   console.log(`${CONFIG_LABELS.INTERIOR}: ${vehicle.config.interior}`);
   console.log(`${CONFIG_LABELS.SUSPENSION}: ${vehicle.config.suspension}`);
   console.log(`${CONFIG_LABELS.TECNOLOGIA}: ${vehicle.config.tecnologia}`);
+  console.log(`${CONFIG_LABELS.LLANTAS}: ${vehicle.config.llantas}`);
   console.log(`Creado: ${vehicle.createdAt.toLocaleString()}`);
   console.log(`Actualizado: ${vehicle.updatedAt.toLocaleString()}`);
 }

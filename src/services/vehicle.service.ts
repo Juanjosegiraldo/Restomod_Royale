@@ -88,6 +88,7 @@ export class VehicleService {
       interior:   CONFIG_OPTIONS.INTERIOR[0],
       suspension: CONFIG_OPTIONS.SUSPENSION[0],
       tecnologia: CONFIG_OPTIONS.TECNOLOGIA[0],
+      llantas:    CONFIG_OPTIONS.LLANTAS[0],
     };
   }
 }
