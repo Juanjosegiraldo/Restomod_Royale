@@ -30,6 +30,7 @@ function configureVehicle(baseConfig?: VehicleConfig): VehicleConfig {
     motor: selectOption(CONFIG_OPTIONS.MOTOR, PROMPTS.SELECT_MOTOR, currentConfig.motor),
     pintura: selectOption(CONFIG_OPTIONS.PINTURA, PROMPTS.SELECT_PINTURA, currentConfig.pintura),
     rines: selectOption(CONFIG_OPTIONS.RINES, PROMPTS.SELECT_RINES, currentConfig.rines),
+    techo: selectOption(CONFIG_OPTIONS.TECHO, PROMPTS.SELECT_TECHO, currentConfig.techo),
     interior: selectOption(CONFIG_OPTIONS.INTERIOR, PROMPTS.SELECT_INTERIOR, currentConfig.interior),
     suspension: selectOption(CONFIG_OPTIONS.SUSPENSION, PROMPTS.SELECT_SUSPENSION, currentConfig.suspension),
     tecnologia: selectOption(CONFIG_OPTIONS.TECNOLOGIA, PROMPTS.SELECT_TECNOLOGIA, currentConfig.tecnologia)
@@ -43,6 +44,7 @@ function printVehicleConfig(vehicle: Vehicle): void {
   console.log(`${CONFIG_LABELS.MOTOR}: ${vehicle.config.motor}`);
   console.log(`${CONFIG_LABELS.PINTURA}: ${vehicle.config.pintura}`);
   console.log(`${CONFIG_LABELS.RINES}: ${vehicle.config.rines}`);
+  console.log(`${CONFIG_LABELS.TECHO}: ${vehicle.config.techo}`);
   console.log(`${CONFIG_LABELS.INTERIOR}: ${vehicle.config.interior}`);
   console.log(`${CONFIG_LABELS.SUSPENSION}: ${vehicle.config.suspension}`);
   console.log(`${CONFIG_LABELS.TECNOLOGIA}: ${vehicle.config.tecnologia}`);
@@ -87,12 +89,15 @@ function editVehicleFlow(vehicle: Vehicle): void {
         updatedConfig.rines = selectOption(CONFIG_OPTIONS.RINES, PROMPTS.SELECT_RINES, updatedConfig.rines);
         break;
       case '4':
-        updatedConfig.interior = selectOption(CONFIG_OPTIONS.INTERIOR, PROMPTS.SELECT_INTERIOR, updatedConfig.interior);
+        updatedConfig.techo = selectOption(CONFIG_OPTIONS.TECHO, PROMPTS.SELECT_TECHO, updatedConfig.techo);
         break;
       case '5':
-        updatedConfig.suspension = selectOption(CONFIG_OPTIONS.SUSPENSION, PROMPTS.SELECT_SUSPENSION, updatedConfig.suspension);
+        updatedConfig.interior = selectOption(CONFIG_OPTIONS.INTERIOR, PROMPTS.SELECT_INTERIOR, updatedConfig.interior);
         break;
       case '6':
+        updatedConfig.suspension = selectOption(CONFIG_OPTIONS.SUSPENSION, PROMPTS.SELECT_SUSPENSION, updatedConfig.suspension);
+        break;
+      case '7':
         updatedConfig.tecnologia = selectOption(CONFIG_OPTIONS.TECNOLOGIA, PROMPTS.SELECT_TECNOLOGIA, updatedConfig.tecnologia);
         break;
       case '0':

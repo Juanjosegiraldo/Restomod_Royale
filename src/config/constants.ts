@@ -13,6 +13,7 @@ export const CONFIG_OPTIONS = {
   MOTOR: ['V8 5.0L Classic', 'V8 6.2L Supercharged', 'V6 3.5L Twin-Turbo', 'Electric 800HP', 'V12 7.0L Racing'],
   PINTURA: ['Midnight Black', 'Racing Red', 'Pearl White', 'Gunmetal Gray', 'Ocean Blue', 'Gold Rush'],
   RINES: ['18" Classic Chrome', '19" Sport Alloy', '20" Carbon Fiber', '21" Gold Plated', '22" Racing Forged'],
+  TECHO: ['Hardtop Clasico', 'Convertible Electrico', 'Targa Carbon Edition'],
   INTERIOR: ['Black Leather Classic', 'Tan Leather Vintage', 'Red Sport Suede', 'White Luxury Diamond', 'Carbon Fiber Racing'],
   SUSPENSION: ['Comfort Touring', 'Sport Lowered', 'Racing Coilover', 'Air Ride Adjustable', 'Track Performance'],
   TECNOLOGIA: ['Basic Analog', 'Digital Touch', 'Full Digital + HUD', 'Racing Telemetry', 'Autonomous+Classic UI']
@@ -22,6 +23,7 @@ export const CONFIG_LABELS = {
   MOTOR: 'Motor',
   PINTURA: 'Pintura',
   RINES: 'Rines',
+  TECHO: 'Techo',
   INTERIOR: 'Interior',
   SUSPENSION: 'Suspension',
   TECNOLOGIA: 'Tecnologia'
@@ -72,6 +74,7 @@ export const PROMPTS = {
   SELECT_MOTOR: 'Seleccione el motor:',
   SELECT_PINTURA: 'Seleccione la pintura:',
   SELECT_RINES: 'Seleccione los rines:',
+  SELECT_TECHO: 'Seleccione el techo:',
   SELECT_INTERIOR: 'Seleccione el interior:',
   SELECT_SUSPENSION: 'Seleccione la suspension:',
   SELECT_TECNOLOGIA: 'Seleccione la tecnologia:',
@@ -83,9 +86,10 @@ export const PROMPTS = {
     '  [1] Motor',
     '  [2] Pintura',
     '  [3] Rines',
-    '  [4] Interior',
-    '  [5] Suspension',
-    '  [6] Tecnologia',
+    '  [4] Techo',
+    '  [5] Interior',
+    '  [6] Suspension',
+    '  [7] Tecnologia',
     '  [0] Terminar edicion',
     '',
     'Seleccione: '

@@ -72,6 +72,7 @@ export class VehicleService {
       motor: CONFIG_OPTIONS.MOTOR[0],
       pintura: CONFIG_OPTIONS.PINTURA[0],
       rines: CONFIG_OPTIONS.RINES[0],
+      techo: CONFIG_OPTIONS.TECHO[0],
       interior: CONFIG_OPTIONS.INTERIOR[0],
       suspension: CONFIG_OPTIONS.SUSPENSION[0],
       tecnologia: CONFIG_OPTIONS.TECNOLOGIA[0]
