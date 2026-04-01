@@ -29,12 +29,10 @@ function validateField(value: string | undefined, options: readonly string[], la
 
 export function validateVehicleConfig(config: Partial<VehicleConfig>): ValidationResult {
   if (!config) return { valid: false, message: 'Configuración no proporcionada' };
-  
   for (const field of CONFIG_FIELDS) {
     const result = validateField(config[field.key], field.options, field.label);
     if (!result.valid) return result;
   }
-  
   return { valid: true };
 }
 
@@ -42,15 +40,9 @@ export function validateVehicleConfig(config: Partial<VehicleConfig>): Validatio
 // VALIDACIÓN: Nombre de vehículo
 // ==========================================
 export function validateVehicleName(name: string): ValidationResult {
-  if (!name || typeof name !== 'string') {
-    return { valid: false, message: 'El nombre es requerido' };
-  }
-  if (name.trim().length < 2) {
-    return { valid: false, message: 'El nombre debe tener al menos 2 caracteres' };
-  }
-  if (name.trim().length > 30) {
-    return { valid: false, message: 'El nombre debe tener máximo 30 caracteres' };
-  }
+  if (!name || typeof name !== 'string') return { valid: false, message: 'El nombre es requerido' };
+  if (name.trim().length < 2) return { valid: false, message: 'El nombre debe tener al menos 2 caracteres' };
+  if (name.trim().length > 30) return { valid: false, message: 'El nombre debe tener máximo 30 caracteres' };
   return { valid: true };
 }
 
@@ -58,18 +50,13 @@ export function validateVehicleName(name: string): ValidationResult {
 // VALIDACIÓN: ID de vehículo existe
 // ==========================================
 export function validateVehicleExists(vehicleId: string, existingIds: string[]): ValidationResult {
-  if (!vehicleId) {
-    return { valid: false, message: 'ID de vehículo no proporcionado' };
-  }
-  if (!existingIds.includes(vehicleId)) {
-    return { valid: false, message: `Vehículo con ID ${vehicleId} no existe` };
-  }
+  if (!vehicleId) return { valid: false, message: 'ID de vehículo no proporcionado' };
+  if (!existingIds.includes(vehicleId)) return { valid: false, message: `Vehículo con ID ${vehicleId} no existe` };
   return { valid: true };
 }
 
 // ==========================================
 // VALIDADOR COMPUESTO (para usar con @Validate)
-// Retorna función que valida argumentos del método
 // ==========================================
 export function createVehicleConfigValidator() {
   return function(args: unknown[]): boolean | string {
@@ -86,12 +73,8 @@ export function createNotEmptyValidator() {
   return function(args: unknown[]): boolean | string {
     for (let i = 0; i < args.length; i++) {
       const arg = args[i];
-      if (arg === null || arg === undefined) {
-        return `Argumento ${i + 1} es null o undefined`;
-      }
-      if (typeof arg === 'string' && arg.trim() === '') {
-        return `Argumento ${i + 1} es un string vacío`;
-      }
+      if (arg === null || arg === undefined) return `Argumento ${i + 1} es null o undefined`;
+      if (typeof arg === 'string' && arg.trim() === '') return `Argumento ${i + 1} es un string vacío`;
     }
     return true;
   };
