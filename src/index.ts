@@ -205,6 +205,11 @@ async function selectedVehicleMenu(vehicle: Vehicle): Promise<void> {
 
     if (matchesOption(option, MENU_OPTIONS.EDIT_CONFIG)) {
       await editVehicleFlow(vehicle);
+      // Recargar vehiculo desde repositorio para tener cambios actualizados
+      const updatedVehicle = vehicleService.getVehicleById(vehicle.id);
+      if (updatedVehicle) {
+        vehicle = updatedVehicle;
+      }
       continue;
     }
 
